@@ -8,10 +8,12 @@ const pool = new Pool({
 
 app.get("/search/:category", async (req, res) => {
   try {
-    const result = await pool.query(
-      "SELECT item, price FROM product WHERE item_category = $1",
-      [req.params.category]
-    );
+const sql =
+  "SELECT * FROM products WHERE category = '" +
+  req.params.category +
+  "'";
+
+const result = await pool.query(sql);
 
     res.json(result.rows);
   } catch (err) {
